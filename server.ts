@@ -2,7 +2,7 @@ import { Application } from "https://deno.land/x/oak@v10.0.0/mod.ts";
 import { setRoutes } from './router.ts';
 import { configure } from './environment/environment-config.ts';
 
-configure();
+await configure();
 
 const app = new Application();
 

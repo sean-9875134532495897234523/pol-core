@@ -1,4 +1,4 @@
-import { Application, Router } from "https://deno.land/x/oak@v10.0.0/mod.ts";
+import { Application, Router, Context } from "https://deno.land/x/oak@v10.0.0/mod.ts";
 import { CustomerService } from './services/customerService.ts';
 import {
        Status,
@@ -8,7 +8,7 @@ import {
 export function setRoutes(app : Application) {
     const router = new Router();
     
-    setDefaultRoute(router);
+    // setDefaultRoute(router);
     setCustomerRoutes(router);
     setProviderRoutes(router);
     setSourceRoutes(router);
@@ -17,8 +17,7 @@ export function setRoutes(app : Application) {
     app.use(router.allowedMethods());
 
     app.use((ctx) => {
-        ctx.response.status = Status.NotFound,
-        ctx.response.body = STATUS_TEXT.get(Status.NotFound);
+        sendNotFound(ctx);
     });
 }
 
@@ -37,7 +36,12 @@ function setCustomerRoutes(router : Router) {
     })
     .get("/customers/:id", async (context) => {
         const customerService = new CustomerService();
-        context.response.body = await customerService.getCustomer(context.params.id);
+        const customer = await customerService.getCustomer(context.params.id);
+        if (!hasData(customer)) {
+            sendNotFound(context);
+        } else {
+            context.response.body = customer;
+        }
     });
 }
 
@@ -47,4 +51,16 @@ function setProviderRoutes(router : Router) {
 
 function setSourceRoutes(router : Router) {
 
+}
+
+function hasData(obj: Object) {
+    if (obj === null || obj === undefined) {
+        return false;
+    }
+    return !(Object.keys(obj).length === 0 && Object.getPrototypeOf(obj) === Object.prototype)
+}
+
+function sendNotFound(ctx : Context) {
+    ctx.response.status = Status.NotFound,
+    ctx.response.body = STATUS_TEXT.get(Status.NotFound);
 }

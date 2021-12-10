@@ -7,10 +7,11 @@ async function loadLocalEnvironmentVariables() {
     for (const setting in envVars) {
         Deno.env.set(setting, envVars[setting] as string);
     }
+    return new Promise<void>((resolve) => { resolve(); });
 }
 
-export function configure() {
+export async function configure() {
     if (!isDenoDeploy) {
-        loadLocalEnvironmentVariables();
+        await loadLocalEnvironmentVariables();
     }
 }
