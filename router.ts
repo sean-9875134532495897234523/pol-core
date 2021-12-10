@@ -42,6 +42,13 @@ function setCustomerRoutes(router : Router) {
         } else {
             context.response.body = customer;
         }
+    })
+    .post("/customers", async (context) => {
+        const customerService = new CustomerService();
+        const body = await context.request.body({ type: 'form-data'});
+        const formData = await body.value.read();
+        const customer = await customerService.createCustomer(formData.fields);
+        context.response.body = customer;
     });
 }
 
