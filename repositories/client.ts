@@ -1,7 +1,5 @@
 import { MongoClient } from "https://deno.land/x/mongo@v0.28.1/mod.ts";
 
-import "https://deno.land/x/dotenv@v3.1.0/load.ts";
-
 export async function getClient() : Promise<MongoClient> {
 
   const client = new MongoClient();
