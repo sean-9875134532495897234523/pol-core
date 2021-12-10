@@ -27,4 +27,14 @@ export class CustomerService {
         model = await repo.insertCustomer(model) as CustomerSchema;
         return new Promise((resolve) => { resolve(model); });
     }
+
+    async updateCustomer(data : Record<string, string>, id: string) : Promise<CustomerSchema> {
+        const existingCustomer = await this.getCustomer(id);
+        existingCustomer.first_name = data['first_name'];
+        existingCustomer.last_name = data['last_name'];
+        existingCustomer.metadata = getMetaDataObject(data);
+        const repo = new CustomerRepository();
+        await repo.updateCustomer(existingCustomer);
+        return new Promise((resolve) => { resolve(existingCustomer); });
+    }
 }

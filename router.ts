@@ -48,7 +48,16 @@ function setCustomerRoutes(router : Router) {
         const body = await context.request.body({ type: 'form-data'});
         const formData = await body.value.read();
         const customer = await customerService.createCustomer(formData.fields);
+        context.response.status = Status.Created,
         context.response.body = customer;
+    })
+    .put("/customers/:id", async (context) => {
+        const customerService = new CustomerService();
+        const body = await context.request.body({ type: 'form-data'});
+        const formData = await body.value.read();
+        const updatedCustomer = await customerService.updateCustomer(formData.fields,
+            context.params.id);
+        context.response.body = updatedCustomer;
     });
 }
 

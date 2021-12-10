@@ -32,4 +32,20 @@ export class CustomerRepository {
     customer._id = await customers.insertOne(customer);
     return new Promise((resolve) => { resolve(customer) });
   }
+  
+  async updateCustomer(customer: CustomerSchema) : Promise<boolean> {
+    const client = await getClient();
+    const db = client.database(Deno.env.get('DEFAULT_DATABASE'));
+    const customers = db.collection<CustomerSchema>(this.collection);
+
+    const { modifiedCount } = await customers.updateOne(
+      { _id: { $eq: customer._id } },
+      { $set: {
+        first_name: customer.first_name,
+        last_name: customer.last_name,
+        metadata: customer.metadata
+      } });
+    
+    return new Promise((resolve) => { resolve(modifiedCount === 1) });
+  }
 }
