@@ -11,10 +11,12 @@ interface Metadata {
     "metadata": Record<string, unknown>;
 }
 
-export interface CustomerSchema extends BaseSchema, Metadata {
+export interface CreatePayerModel extends Metadata {
     "first_name": string;
     "last_name": string;
 }
+
+export interface CustomerSchema extends BaseSchema, CreatePayerModel {}
 
 export interface FullCustomerSchema extends CustomerSchema {
     "sources": SourceSchema[];

@@ -20,6 +20,6 @@ export class CustomerRepository {
     const client = await getClient();
     const db = client.database(Deno.env.get('DEFAULT_DATABASE'));
     const users = db.collection<CustomerSchema>(this.collection);
-    return await users.find({ _id: new Bson.ObjectId(id) }, { noCursorTimeout: false}).toArray();
+    return await users.findOne({ _id: new Bson.ObjectId(id) }, { noCursorTimeout: false});
   }
 }

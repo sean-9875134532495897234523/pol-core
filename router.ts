@@ -1,5 +1,9 @@
 import { Application, Router } from "https://deno.land/x/oak@v10.0.0/mod.ts";
 import { CustomerService } from './services/customerService.ts';
+import {
+       Status,
+       STATUS_TEXT,
+     } from "https://deno.land/std@0.117.0/http/http_status.ts";
 
 export function setRoutes(app : Application) {
     const router = new Router();
@@ -11,6 +15,11 @@ export function setRoutes(app : Application) {
 
     app.use(router.routes());
     app.use(router.allowedMethods());
+
+    app.use((ctx) => {
+        ctx.response.status = Status.NotFound,
+        ctx.response.body = STATUS_TEXT.get(Status.NotFound);
+    });
 }
 
 function setDefaultRoute(router : Router) {

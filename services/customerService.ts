@@ -8,9 +8,9 @@ export class CustomerService {
         return new Promise((resolve) => { resolve(customers); });
     }
 
-    async getCustomer(id: string) : Promise<CustomerSchema[]> {
+    async getCustomer(id: string) : Promise<CustomerSchema> {
         const repo = new CustomerRepository();
         const customers = await repo.getCustomer(id);
-        return new Promise((resolve) => { resolve(customers); });
+        return new Promise((resolve) => { resolve(customers as object as any); });
     }
 }
