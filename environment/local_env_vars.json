@@ -1,0 +1,12 @@
+{
+    "DEFAULT_DATABASE": "pol",
+	"DB_SERVER_1_HOST": "cluster0-shard-00-01.8lxzj.mongodb.net",
+	"DB_SERVER_1_PORT": "27017",
+	"DB_SERVER_2_HOST": "cluster0-shard-00-00.8lxzj.mongodb.net",
+	"DB_SERVER_2_PORT": "27017",
+	"DB_SERVER_3_HOST": "cluster0-shard-00-02.8lxzj.mongodb.net",
+	"DB_SERVER_3_PORT": "27017",
+	"DB_POL_USER_NAME": "pol-user",
+	"DB_POL_PASSWORD": "81drive47sugarmass614764developpitch",
+	"HELLO_RESPONSE": "world"
+}
